@@ -1,0 +1,57 @@
+
+#include <Stepper.h>
+// change this to the number of steps on your motor
+#define STEPS 200
+
+// create an instance of the stepper class, specifying
+// the number of steps of the motor and the pins it's
+// attached to
+Stepper stepper1(STEPS, 4, 5, 6, 7);
+Stepper stepper2(STEPS, 8, 9, 10, 11);
+
+
+int mySteps1, mySteps2;
+
+int input;
+
+
+void setup() {
+  stepper1.setSpeed(80);
+  stepper2.setSpeed(80);
+  Serial.begin(9600);
+
+
+  mySteps1 = 1;
+  mySteps2 = -1;
+}
+
+void loop() {
+
+  if (Serial.available()) {
+    input = Serial.read();
+
+    switch (input) {
+
+
+      case 'W':
+
+        stepper1.step(mySteps1);
+        mySteps1++;
+      //  delay(500);
+      break;
+
+      case 'S':
+        
+        stepper1.step(mySteps2);
+        mySteps2--;
+        //delay(500);
+        break;
+
+      case '0':
+      stepper1.setSpeed(0);
+      break;
+
+
+    }
+    }
+}
